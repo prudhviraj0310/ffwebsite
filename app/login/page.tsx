@@ -31,8 +31,8 @@ export default function LoginPage() {
             const payload = JSON.parse(jsonPayload);
 
             // Call Backend API to Create/Login User
-            // Assuming backend is running on localhost:5000 for now, or configured URL
-            const API_URL = "http://localhost:5000/api/auth/google";
+            // Use Production Backend URL
+            const API_URL = process.env.NEXT_PUBLIC_API_URL || "https://ucs48k4c8g80840k8c00w4cc.hexaind.org/api/auth/google";
 
             const res = await fetch(API_URL, {
                 method: "POST",
