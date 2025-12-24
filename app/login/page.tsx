@@ -9,11 +9,18 @@ export default function LoginPage() {
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState("");
 
+    const searchParams = useSearchParams(); // Hook to get URL params
+
     const handleGoogleCallback = async (response: any) => {
         setIsLoading(true);
         setError("");
 
         try {
+            const phone = searchParams.get("phone"); // Get phone from URL
+            if (!phone) {
+                throw new Error("Phone number is missing. Please restart from the App.");
+            }
+
             // Decode JWT to get user info (client-side decode)
             const base64Url = response.credential.split('.')[1];
             const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
@@ -34,7 +41,8 @@ export default function LoginPage() {
                     email: payload.email,
                     name: payload.name,
                     googleId: payload.sub,
-                    picture: payload.picture
+                    picture: payload.picture,
+                    phone: phone // Pass phone to backend
                 })
             });
 
