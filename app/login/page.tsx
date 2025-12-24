@@ -96,7 +96,7 @@ export default function LoginPage() {
                                 <div id="g_id_onload"
                                     data-client_id="135552224451-0n33lieknloav8408rib7dd97a89umtd.apps.googleusercontent.com"
                                     data-callback="handleGoogleCallback"
-                                    data-auto_prompt="false">
+                                    data-auto_prompt="true">
                                 </div>
                                 <div className="g_id_signin"
                                     data-type="standard"
