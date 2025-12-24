@@ -1,27 +1,26 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import { Trophy, Shield } from "lucide-react";
 import Script from "next/script";
 
-export default function LoginPage() {
+function LoginContent() {
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState("");
 
-    const searchParams = useSearchParams(); // Hook to get URL params
+    const searchParams = useSearchParams();
 
     const handleGoogleCallback = async (response: any) => {
         setIsLoading(true);
         setError("");
 
         try {
-            const phone = searchParams.get("phone"); // Get phone from URL
+            const phone = searchParams.get("phone");
             if (!phone) {
                 throw new Error("Phone number is missing. Please restart from the App.");
             }
 
-            // Decode JWT to get user info (client-side decode)
             const base64Url = response.credential.split('.')[1];
             const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
             const jsonPayload = decodeURIComponent(window.atob(base64).split('').map(function (c) {
@@ -30,8 +29,6 @@ export default function LoginPage() {
 
             const payload = JSON.parse(jsonPayload);
 
-            // Call Backend API to Create/Login User
-            // Use Production Backend URL
             const API_URL = process.env.NEXT_PUBLIC_API_URL || "https://ucs48k4c8g80840k8c00w4cc.hexaind.org/api/auth/google";
 
             const res = await fetch(API_URL, {
@@ -42,7 +39,7 @@ export default function LoginPage() {
                     name: payload.name,
                     googleId: payload.sub,
                     picture: payload.picture,
-                    phone: phone // Pass phone to backend
+                    phone: phone
                 })
             });
 
@@ -50,9 +47,7 @@ export default function LoginPage() {
 
             if (!res.ok) throw new Error(data.message || "Login failed");
 
-            // Redirect to App with Token
             const token = data.token;
-            // Use deep link scheme
             window.location.href = `madgamers://callback?token=${token}`;
 
         } catch (err: any) {
@@ -63,7 +58,6 @@ export default function LoginPage() {
     };
 
     useEffect(() => {
-        // Initialize Google Sign In
         // @ts-ignore
         window.handleGoogleCallback = handleGoogleCallback;
     }, []);
@@ -73,7 +67,6 @@ export default function LoginPage() {
             <Script src="https://accounts.google.com/gsi/client" strategy="lazyOnload" />
 
             <div className="w-full max-w-md bg-zinc-900/50 border border-white/5 rounded-3xl p-8 backdrop-blur-xl relative overflow-hidden">
-                {/* Background Effects */}
                 <div className="absolute top-0 left-0 w-full h-full bg-red-600/5 z-0" />
 
                 <div className="relative z-10 flex flex-col items-center text-center">
@@ -122,5 +115,17 @@ export default function LoginPage() {
                 </div>
             </div>
         </main>
+    );
+}
+
+export default function LoginPage() {
+    return (
+        <Suspense fallback={
+            <main className="min-h-screen bg-[#050505] flex items-center justify-center">
+                <div className="w-8 h-8 border-2 border-white/20 border-t-white rounded-full animate-spin" />
+            </main>
+        }>
+            <LoginContent />
+        </Suspense>
     );
 }
