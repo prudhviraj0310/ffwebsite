@@ -27,7 +27,7 @@ export default function LandingPage() {
                     </div>
 
                     <a
-                        href="/madgamers.apk"
+                        href="https://x004k044ogw4gcscwg0owocg.hexaind.org/download"
                         download
                         className="hidden md:flex bg-white text-black px-6 py-2.5 rounded-full font-black text-sm hover:scale-105 active:scale-95 transition-all shadow-[0_0_20px_rgba(255,255,255,0.3)] hover:shadow-[0_0_30px_rgba(255,255,255,0.5)] items-center gap-2"
                     >
@@ -161,7 +161,7 @@ export default function LandingPage() {
                             <p className="text-zinc-400 text-lg mb-8">
                                 Follow these simple steps to download and install the MadGamers app on your Android device.
                             </p>
-                            <a href="/madgamers.apk" download className="inline-flex items-center gap-2 text-white font-bold hover:text-red-500 transition-colors">
+                            <a href="https://x004k044ogw4gcscwg0owocg.hexaind.org/download" download className="inline-flex items-center gap-2 text-white font-bold hover:text-red-500 transition-colors">
                                 Start Download <ChevronDown />
                             </a>
                         </div>
@@ -197,7 +197,7 @@ export default function LandingPage() {
 function DownloadButton() {
     return (
         <a
-            href="/madgamers.apk"
+            href="https://x004k044ogw4gcscwg0owocg.hexaind.org/download"
             download
             className="group relative w-full h-16 bg-red-600 hover:bg-red-500 transition-all rounded-xl overflow-hidden shadow-[0_0_40px_rgba(220,38,38,0.3)] hover:shadow-[0_0_60px_rgba(220,38,38,0.5)]"
         >
